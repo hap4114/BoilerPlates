@@ -1,0 +1,6 @@
+✅ API Examples You Can Plug In:
+API Type	URL Template
+Weather	api.openweathermap.org
+News	newsapi.org/v2/top-headlines?q=QUERY&apiKey=YOUR_KEY
+Joke API	https://official-joke-api.appspot.com/jokes/random
+Crypto Prices	https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd

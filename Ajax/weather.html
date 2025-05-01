@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Info & Contact Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #weather-result { margin-top: 20px; }
+    form { margin-top: 30px; }
+    input, textarea { display: block; margin-bottom: 10px; width: 300px; padding: 8px; }
+    img { max-width: 100%; height: auto; margin-top: 20px; }
+    iframe { margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <h1>Real-time Weather Information</h1>
+
+  <label for="city">Enter City Name:</label>
+  <input type="text" id="city" placeholder="e.g. Mumbai" />
+  <button onclick="getWeather()">Get Weather</button>
+
+  <div id="weather-result"></div>
+
+  <h2>Sample Image</h2>
+  <img src="https://source.unsplash.com/400x200/?weather" alt="Weather Image" />
+
+  <h2>Instructional Video</h2>
+  <iframe width="560" height="315" 
+    src="https://www.youtube.com/embed/GuA0_Z1llYU" 
+    frameborder="0" allowfullscreen>
+  </iframe>
+
+  <h2>Contact Us</h2>
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById("city").value;
+      const apiKey = "bd5e378503939ddaee76f12ad7a97608";  // Replace with your OpenWeatherMap API key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.cod === 200) {
+          const result = `
+            <h3>Weather in ${data.name}, ${data.sys.country}</h3>
+            <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+            <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+            <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+            <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+          `;
+          document.getElementById("weather-result").innerHTML = result;
+        } else {
+          document.getElementById("weather-result").innerHTML = "<p>City not found. Please try again.</p>";
+        }
+      } catch (error) {
+        document.getElementById("weather-result").innerHTML = "<p>Error fetching data. Please try again later.</p>";
+      }
+    }
+  </script>
+
+</body>
+</html>
